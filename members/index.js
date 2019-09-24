@@ -37,5 +37,3 @@ function members() {
 }
 
 module.exports = members();
-
-members().find(156).then(console.log);
