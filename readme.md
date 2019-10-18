@@ -25,6 +25,7 @@ sudo su
 # Install NFC libraries
 apt install libnfc-bin
 apt install libpcsclite-dev
+apt install pcscd
 
 # Install Node 10
 curl -sL https://deb.nodesource.com/setup_10.x | bash -
