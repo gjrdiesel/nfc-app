@@ -1,16 +1,19 @@
 <template>
     <div class="row">
-        <div class="col-6">
+        <div class="col-12">
+            <router-link class="btn btn-default" to="/">&longleftarrow; Back</router-link>
+        </div>
+        <div class="col-10 offset-2">
             <h1>{{ $store.getters.member['Display Name'] }}</h1>
             <pre>{{ JSON.stringify($store.getters.member,null,2) }}</pre>
             <button @click="scanMode=!scanMode" v-if="!scanMode" class="btn btn-default">Scan new card</button>
         </div>
-        <div class="col-6">
+        <div class="col-10 offset-2">
             <div class="scan" v-if="scanMode">
                 <h1>New Card</h1>
                 <div>
                     <pre v-if="$store.state.cardReady">{{ JSON.stringify($store.state.card,null,2) }}</pre>
-                    <div class="text-center py-5" v-else>
+                    <div class="py-5" v-else>
                         Please place a card on the scanner
                     </div>
                 </div>
