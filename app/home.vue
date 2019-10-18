@@ -4,10 +4,12 @@
             <div class="row">
                 <div class="col">
                     <h1>Members</h1>
+                    <input type="text" placeholder="Search..." class="form-control mb-3" style="max-width: 80%;"
+                           v-model="search">
                 </div>
             </div>
             <ul>
-                <li v-for="member in $store.state.members">
+                <li v-for="member in members">
                     <router-link :to="`/member/${member['Member Id']}`">{{ member['Display Name'] }}</router-link>
                 </li>
             </ul>
@@ -25,3 +27,27 @@
         </div>
     </div>
 </template>
+<script>
+    export default {
+        data() {
+            return {
+                search: ''
+            }
+        },
+        computed: {
+            members() {
+                if (this.search) {
+                    return this.$store.state.members.filter(m => {
+                        return [
+                            m['Display Name'],
+                            m['Member Id'],
+                            m['Category'],
+                            m['User']
+                        ].map(f => new RegExp(this.search, 'ig').test(f)).includes(true)
+                    });
+                }
+                return this.$store.state.members;
+            }
+        }
+    }
+</script>
