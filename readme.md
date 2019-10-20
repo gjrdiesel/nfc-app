@@ -27,6 +27,12 @@ apt install libnfc-bin
 apt install libpcsclite-dev
 apt install pcscd
 
+# Setup MySQL server
+apt install mysql
+cd ~/nfc-app/members 
+mysql -u root nfc --local-infile=1 < setup.sql
+cd ~/nfc-app
+
 # Install Node 10
 curl -sL https://deb.nodesource.com/setup_10.x | bash -
 apt-get install -y nodejs

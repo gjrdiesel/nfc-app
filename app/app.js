@@ -11,6 +11,8 @@ files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(
 const routes = [
     {path: '/', component: files('./home.vue').default},
     {path: '/member/:id', component: files('./member.vue').default},
+    {path: '/add/member', component: files('./add-member.vue').default},
+    {path: '/csv/import', component: files('./import-csv.vue').default},
 ];
 
 const router = new VueRouter({

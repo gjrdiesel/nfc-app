@@ -2,20 +2,44 @@ const express = require('express');
 const path = require('path');
 const app = express();
 app.use(express.static(path.join(__dirname, 'static')));
-const http = require('http').createServer(app);
-const io = require('socket.io')(http);
+const bodyParser = require('body-parser');
+const models = require('../models');
 
-require('../reader')(io);
-const members = require('../members');
+app.use(bodyParser.json());
 
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');
 });
 
 app.get('/members', function (req, res) {
-    members.read().then(m => res.send(m));
+    models.Member.findAll().then(m => res.send(m));
 });
 
-http.listen(3000, function () {
-    console.log('listening on *:3000');
+app.get('/entries', function (req, res) {
+    models.Entry.findAll({
+        limit: 10,
+        order: [['createdAt', 'DESC']],
+        include: [models.Member]
+    }).then(entries => {
+        res.send(entries.map(e => e.Member))
+    });
 });
+
+app.post('/member', function (req, res) {
+    const member = req.body;
+
+    models.Member
+        .findByPk(member.id)
+        .then(m => m.update(member))
+        .then(() => models.Member
+            .findAll()
+            .then(res.send)
+        );
+});
+
+app.post('/member/create', function (req, res) {
+    const member = req.body;
+    models.Member.create(member).then(() => res.send({status: 'ok'}));
+});
+
+module.exports = app;

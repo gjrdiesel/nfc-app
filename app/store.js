@@ -1,4 +1,5 @@
 import Vuex from "vuex";
+import Axios from "axios";
 
 const store = new Vuex.Store({
     state: {
@@ -6,15 +7,20 @@ const store = new Vuex.Store({
         selected: null,
         card: null,
         cardReady: false,
+        noMatch: false,
         signIn: [],
     },
     getters: {
         member: state => {
-            let id = state.members.findIndex(m => m['Member Id'] == state.selected);
+            let id = state.members.findIndex(m => m.id == state.selected);
             return state.members[id] || {};
         }
     },
     mutations: {
+        storeSignIns(state, payload) {
+
+            state.signIn = payload;
+        },
         storeMembers(state, payload) {
 
             state.members = payload;
@@ -28,30 +34,28 @@ const store = new Vuex.Store({
             state.selected = payload;
         },
         saveUid(state, payload) {
-            let id = state.members.findIndex(m => m["Sandbox_Info : UID"] == payload.uid);
-            if (id >= 0) {
-                const name = state.members[id]['Display Name'];
-                if (confirm(`UID already exists for ${name}, do you want to overwrite?`)) {
-                    state.members[id]["Sandbox_Info : UID"] = '';
-                }
-                else {
-                    return;
-                }
-            }
+            payload.member.uid = payload.uid;
+            this.dispatch('updateMember', payload.member);
 
-            id = state.members.indexOf(payload.member);
-            state.members[id]["Sandbox_Info : UID"] = payload.uid;
             state.cardReady = false;
             state.card = null;
         },
+        signIn(state, member) {
+            if (member) {
+                state.noMatch = false;
+                state.signIn.unshift(member);
+            }
+            else {
+                state.noMatch = true;
+            }
+        },
+        noMatch(state) {
+            state.noMatch = true;
+        },
         cardOn(state, payload) {
+            state.noMatch = false;
             state.card = payload;
             state.cardReady = true;
-
-            let id = state.members.findIndex(m => m["Sandbox_Info : UID"] == state.card.uid);
-            if (id >= 0) {
-                state.signIn.unshift(state.members[id]);
-            }
         },
         cardOff(state) {
             state.card = null;
@@ -60,13 +64,20 @@ const store = new Vuex.Store({
     },
     actions: {
         async getMembers({commit}) {
-            fetch('/members')
-                .then(r => r.json())
-                .then(m => commit('storeMembers', m));
+            const members = (await Axios.get('/members')).data;
+            commit('storeMembers', members);
+
+            const signIns = (await Axios.get('/entries')).data;
+            commit('storeSignIns', signIns);
+        },
+        async updateMember({commit}, payload) {
+            const data = (await Axios.post('/member', payload)).data;
+            commit('storeMembers', data);
         },
         subscribeEvents({commit}) {
             socket.on('card.on', card => commit('cardOn', card));
             socket.on('card.off', card => commit('cardOff', card));
+            socket.on('member.sign_in', member => commit('signIn', member));
         }
     }
 });

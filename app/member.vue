@@ -4,7 +4,7 @@
             <router-link class="btn btn-default" to="/">&longleftarrow; Back</router-link>
         </div>
         <div class="col-10 offset-2">
-            <h1>{{ $store.getters.member['Display Name'] }}</h1>
+            <h1>{{ $store.getters.member.name }}</h1>
             <pre>{{ JSON.stringify($store.getters.member,null,2) }}</pre>
             <button @click="scanMode=!scanMode" v-if="!scanMode" class="btn btn-default">Scan new card</button>
         </div>
