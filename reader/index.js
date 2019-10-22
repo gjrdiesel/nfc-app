@@ -1,6 +1,7 @@
 const nfcLibrary = require('nfc-pcsc');
 const nfc = new nfcLibrary.NFC(); // optionally you can pass logger
 const models = require('../models');
+const axios = require('axios');
 
 function handleFailure(io, err, type) {
     log(io, 'server.crash', {err, type});
@@ -25,7 +26,13 @@ function saveSignIn(io, member) {
         models.Entry.create({
             category: 'Test',
             MemberId: member.id
-        })
+        });
+        axios.post('https://ksis-asoft.herokuapp.com/', {
+            message: " (" + member.email + ")",
+            success: true,
+            action: 'unlock',
+            type: 'project_membership'
+        }).catch(console.log);
     }
     else {
         log(io, 'member.no_match');
