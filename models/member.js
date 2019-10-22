@@ -1,6 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
     const Member = sequelize.define('Member', {
         email: {type: DataTypes.STRING},
+        category: DataTypes.STRING,
         name: DataTypes.STRING,
         uid: DataTypes.STRING
     });
