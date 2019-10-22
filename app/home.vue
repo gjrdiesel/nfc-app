@@ -31,7 +31,7 @@
             <h2>Last 5 sign ins</h2>
             <ul>
                 <li v-for="user in $store.state.signIn.slice(0,5)">
-                    {{ user.name }} ({{ user.user }})
+                    {{ user.name }} ({{ user.email }})
                 </li>
             </ul>
         </div>

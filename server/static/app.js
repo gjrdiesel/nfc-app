@@ -4293,7 +4293,7 @@ var render = function() {
               "\n                " +
                 _vm._s(user.name) +
                 " (" +
-                _vm._s(user.user) +
+                _vm._s(user.email) +
                 ")\n            "
             )
           ])
