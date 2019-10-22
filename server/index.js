@@ -5,6 +5,8 @@ app.use(express.static(path.join(__dirname, 'static')));
 const bodyParser = require('body-parser');
 const models = require('../models');
 
+const {execSync} = require('child_process');
+
 app.use(bodyParser.json());
 
 app.get('/', function (req, res) {
@@ -13,6 +15,10 @@ app.get('/', function (req, res) {
 
 app.get('/members', function (req, res) {
     models.Member.findAll().then(m => res.send(m));
+});
+
+app.get('/ip', function (req, res) {
+    execSync('ifconfig')
 });
 
 app.get('/entries', function (req, res) {

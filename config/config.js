@@ -3,7 +3,7 @@ let db = {
     password: null,
     database: 'nfc',
     host: 'localhost',
-    dialect: 'mysql',
+    dialect: 'mariadb',
 };
 
 module.exports = {

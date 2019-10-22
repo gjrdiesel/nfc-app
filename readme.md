@@ -49,7 +49,7 @@ cd nfc-app
 npm install
 
 # Start server
-pm2 start server --watch
+pm2 start bin/www --watch
 ```
 
 ### With installation complete

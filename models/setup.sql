@@ -24,9 +24,10 @@ CREATE TABLE IF NOT EXISTS `sign_ins`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
-LOAD DATA LOCAL INFILE 'members.csv'
-    INTO TABLE members
+LOAD DATA LOCAL INFILE 'models/members.csv'
+    INTO TABLE Members
     FIELDS TERMINATED BY ','
     ENCLOSED BY '"'
     LINES TERMINATED BY '\n'
-    IGNORE 1 ROWS;
+    IGNORE 1 ROWS
+(id,null,email,name,createdAt,updatedAt);

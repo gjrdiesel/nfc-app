@@ -1,5 +1,8 @@
 <template>
     <div class="row">
+        <div class="ip-block">
+            127.0.0.1
+        </div>
         <div class="col-6">
             <div class="row">
                 <div class="col-10">
@@ -16,13 +19,13 @@
                 </div>
             </div>
             <ul>
-                <li v-for="member in members">
+                <li class="member-list" v-for="member in members">
                     <router-link :to="`/member/${member.id}`">{{ member.name }}</router-link>
                 </li>
             </ul>
         </div>
         <div class="col-6">
-            <h1>Sign in</h1>
+            <h1>Sign in <input v-model="Event" /></h1>
             <h3 v-if="$store.state.noMatch">Unregistered RFID</h3>
             <div v-else-if="$store.state.signIn[0]">
                 <h3>Hello {{ $store.state.signIn[0].name }}</h3>
@@ -37,6 +40,15 @@
         </div>
     </div>
 </template>
+<style>
+    .ip-block {
+        background: black;
+        color: gainsboro;
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+</style>
 <script>
     export default {
         data() {

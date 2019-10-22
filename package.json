@@ -24,6 +24,7 @@
     "expect.js": "^0.3.1",
     "express": "^4.15.2",
     "fast-csv": "^3.4.0",
+    "mariadb": "^2.1.2",
     "mocha": "^6.2.2",
     "mysql2": "^1.7.0",
     "nfc-pcsc": "^0.7.4",
