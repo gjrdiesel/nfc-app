@@ -9,6 +9,7 @@ const store = new Vuex.Store({
         cardReady: false,
         noMatch: false,
         signIn: [],
+        serverCrashes: [],
     },
     getters: {
         member: state => {
@@ -17,6 +18,10 @@ const store = new Vuex.Store({
         }
     },
     mutations: {
+        serverCrash(state, payload) {
+
+            state.serverCrashes.push(payload)
+        },
         storeSignIns(state, payload) {
 
             state.signIn = payload;
@@ -78,6 +83,7 @@ const store = new Vuex.Store({
             socket.on('card.on', card => commit('cardOn', card));
             socket.on('card.off', card => commit('cardOff', card));
             socket.on('member.sign_in', member => commit('signIn', member));
+            socket.on('server.crash', details => commit('serverCrash', details));
         }
     }
 });

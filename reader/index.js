@@ -6,7 +6,7 @@ const axios = require('axios');
 function handleFailure(io, err, type) {
     log(io, 'server.crash', {err, type});
     // Let PM2 restart the process
-    process.exit();
+    // process.exit();
 }
 
 function log(io, name, data) {
@@ -42,8 +42,8 @@ function saveSignIn(io, member) {
 module.exports = function (io) {
     nfc.on('reader', reader => {
         reader.aid = 'F222222222';
-        log(io, 'reader.on', reader);
-        reader.on('end', reader => log(io, 'reader.off', reader));
+        handleFailure(io, 'reader.on', reader);
+        reader.on('end', reader => handleFailure(io, 'reader.off', reader));
         reader.on('card', card => {
             log(io, 'card.on', card);
             matchMember(io, card);

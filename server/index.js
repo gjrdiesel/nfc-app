@@ -26,6 +26,11 @@ app.get('/ip', function (req, res) {
     res.send(ip);
 });
 
+app.get('/restart', function (req, res) {
+    res.send('ok!');
+    setTimeout(process.exit, 300);
+});
+
 app.get('/entries', function (req, res) {
     models.Entry.findAll({
         limit: 10,
