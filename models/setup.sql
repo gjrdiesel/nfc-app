@@ -1,26 +1,28 @@
 CREATE DATABASE IF NOT EXISTS `nfc`;
 
-CREATE TABLE IF NOT EXISTS `members`
+CREATE TABLE IF NOT EXISTS `Members`
 (
-    `id`        int(11) AUTO_INCREMENT,
-    PRIMARY KEY (`id`),
+    `id`        int(11)  NOT NULL AUTO_INCREMENT,
+    `email`     varchar(255) DEFAULT NULL,
     `category`  varchar(255) DEFAULT NULL,
-    `user`      varchar(255) DEFAULT NULL,
     `name`      varchar(255) DEFAULT NULL,
-    `createdAt` datetime     DEFAULT NULL,
-    `updatedAt` datetime     DEFAULT NULL,
-    `uid`       varchar(255) DEFAULT NULL
+    `uid`       varchar(255) DEFAULT NULL,
+    `createdAt` datetime NOT NULL,
+    `updatedAt` datetime NOT NULL,
+    PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
-CREATE TABLE IF NOT EXISTS `sign_ins`
+CREATE TABLE IF NOT EXISTS `Entries`
 (
-    `id`        int(11) AUTO_INCREMENT,
-    PRIMARY KEY (`id`),
+    `id`        int(11)  NOT NULL AUTO_INCREMENT,
     `category`  varchar(255) DEFAULT NULL,
-    `memberId` int(11),
-    `createdAt` datetime     DEFAULT NULL,
-    `updatedAt` datetime     DEFAULT NULL
+    `createdAt` datetime NOT NULL,
+    `updatedAt` datetime NOT NULL,
+    `MemberId`  int(11)  NOT NULL,
+    PRIMARY KEY (`id`),
+    KEY `MemberId` (`MemberId`),
+    CONSTRAINT `entries_ibfk_1` FOREIGN KEY (`MemberId`) REFERENCES `Members` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
@@ -30,4 +32,4 @@ LOAD DATA LOCAL INFILE 'models/members.csv'
     ENCLOSED BY '"'
     LINES TERMINATED BY '\n'
     IGNORE 1 ROWS
-(id,null,email,name,createdAt,updatedAt);
+    (id,category,email, name,createdAt,uid);

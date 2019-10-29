@@ -2714,38 +2714,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    var id = this.$route.params.id;
-    this.$store.commit('selectMember', id);
-  },
-  watch: {
-    '$store.state.card': function $storeStateCard(card) {
-      if (card.uid) {
-        this.member.uid = card.uid;
-      }
-    }
-  },
-  data: function data() {
-    return {
-      scanMode: false,
-      member: {},
-      isLoading: false
-    };
-  },
   methods: {
-    save: function save() {
-      var _this = this;
-
-      this.isLoading = true;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/member/create', this.member).then(function () {
-        _this.$store.dispatch('getMembers');
-
-        _this.member = {};
-        _this.scanMode = false;
-        _this.isLoading = false;
-      });
+    handleSubmit: function handleSubmit() {
+      axios.post('/import', csv);
     }
   }
 });
@@ -5198,35 +5175,57 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-6 m-auto" }, [
+    return _c("div", { staticClass: "col-12 m-auto" }, [
       _c("h1", [_vm._v("Import a CSV")]),
       _vm._v(" "),
       _c(
         "div",
         { staticClass: "alert alert-danger", attrs: { role: "alert" } },
-        [_vm._v("\n            This is not finished\n        ")]
+        [
+          _vm._v(
+            "\n                This will erase all data, be sure to have exported the CSVs first!\n            "
+          )
+        ]
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "form-check" }, [
-        _c("input", {
-          staticClass: "form-check-input",
-          attrs: { type: "checkbox", id: "erase" }
-        }),
-        _vm._v(" "),
-        _c(
-          "label",
-          { staticClass: "form-check-label", attrs: { for: "erase" } },
-          [
+      _c(
+        "div",
+        { staticClass: "alert alert-danger", attrs: { role: "alert" } },
+        [
+          _vm._v("\n                CSV must be formatted like: "),
+          _c("br"),
+          _c("br"),
+          _vm._v(" "),
+          _c("pre", [
             _vm._v(
-              "\n                Erase all data when importing?\n            "
+              "Member Id,Category,User,Display Name,Created Date,Sandbox_Info : UID\n1,Example,test@gmail.com,Justin Reasoner,2019-09-20 20:19:19,\n2,Example,test@gmail.com,Jared Serfozo,2019-09-21 20:19:19"
             )
-          ]
-        )
-      ]),
+          ]),
+          _vm._v(
+            "\n\n                It must be in the same order and include a header as shown above.\n            "
+          )
+        ]
+      ),
       _vm._v(" "),
-      _c("div", { staticClass: "my-3" }, [
-        _c("input", { attrs: { type: "file", id: "file" } })
-      ])
+      _c(
+        "form",
+        {
+          staticClass: "my-3",
+          attrs: {
+            enctype: "multipart/form-data",
+            method: "post",
+            action: "/import"
+          }
+        },
+        [
+          _c("input", { attrs: { type: "file", name: "import" } }),
+          _vm._v(" "),
+          _c("br"),
+          _c("br"),
+          _vm._v(" "),
+          _c("button", { attrs: { type: "submit" } }, [_vm._v("Import")])
+        ]
+      )
     ])
   }
 ]
