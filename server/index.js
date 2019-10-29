@@ -18,7 +18,12 @@ app.get('/members', function (req, res) {
 });
 
 app.get('/ip', function (req, res) {
-    execSync('ifconfig')
+    const ip = execSync('ifconfig | grep "inet "')
+        .toString()
+        .split("\n")
+        .map(s => (s.trim().split('inet ')[1] || '').split(' ')[0])
+        .filter(f => f && f !== '127.0.0.1');
+    res.send(ip);
 });
 
 app.get('/entries', function (req, res) {

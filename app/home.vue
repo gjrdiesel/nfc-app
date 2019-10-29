@@ -1,7 +1,7 @@
 <template>
     <div class="row">
         <div class="ip-block">
-            127.0.0.1
+            {{ ips.length > 0 ? ips.join(' / ') : 'No internet' }}
         </div>
         <div class="col-6">
             <div class="row">
@@ -25,7 +25,7 @@
             </ul>
         </div>
         <div class="col-6">
-            <h1>Sign in <input v-model="Event" /></h1>
+            <h1>Sign in</h1>
             <h3 v-if="$store.state.noMatch">Unregistered RFID</h3>
             <div v-else-if="$store.state.signIn[0]">
                 <h3>Hello {{ $store.state.signIn[0].name }}</h3>
@@ -47,13 +47,23 @@
         position: absolute;
         top: 0;
         right: 0;
+        padding: 5px;
     }
 </style>
 <script>
+    import axios from "axios"
+
     export default {
+        mounted() {
+            axios.get('/ip')
+                .then(response => {
+                    this.ips = response.data;
+                });
+        },
         data() {
             return {
-                search: ''
+                search: '',
+                ips: []
             }
         },
         computed: {

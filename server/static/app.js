@@ -2568,6 +2568,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -2619,20 +2621,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  mounted: function mounted() {
+    var _this = this;
+
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/ip').then(function (response) {
+      _this.ips = response.data;
+    });
+  },
   data: function data() {
     return {
-      search: ''
+      search: '',
+      ips: []
     };
   },
   computed: {
     members: function members() {
-      var _this = this;
+      var _this2 = this;
 
       if (this.search) {
         return this.$store.state.members.filter(function (m) {
           return [m.name, m.id, m.category, m.user].map(function (f) {
-            return new RegExp(_this.search, 'ig').test(f);
+            return new RegExp(_this2.search, 'ig').test(f);
           }).includes(true);
         });
       }
@@ -2811,7 +2823,7 @@ exports = module.exports = __webpack_require__(/*! ../node_modules/css-loader/li
 
 
 // module
-exports.push([module.i, "\n.ip-block {\n    background: black;\n    color: gainsboro;\n    position: absolute;\n    top: 0;\n    right: 0;\n}\n", ""]);
+exports.push([module.i, "\n.ip-block {\n    background: black;\n    color: gainsboro;\n    position: absolute;\n    top: 0;\n    right: 0;\n    padding: 5px;\n}\n", ""]);
 
 // exports
 
@@ -4866,7 +4878,11 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row" }, [
     _c("div", { staticClass: "ip-block" }, [
-      _vm._v("\n        127.0.0.1\n    ")
+      _vm._v(
+        "\n        " +
+          _vm._s(_vm.ips.length > 0 ? _vm.ips.join(" / ") : "No internet") +
+          "\n    "
+      )
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "col-6" }, [
@@ -4945,28 +4961,7 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "col-6" }, [
-      _c("h1", [
-        _vm._v("Sign in "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.Event,
-              expression: "Event"
-            }
-          ],
-          domProps: { value: _vm.Event },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.Event = $event.target.value
-            }
-          }
-        })
-      ]),
+      _c("h1", [_vm._v("Sign in")]),
       _vm._v(" "),
       _vm.$store.state.noMatch
         ? _c("h3", [_vm._v("Unregistered RFID")])
