@@ -53,11 +53,7 @@ pm2 start bin/www --watch
 pm2 save
 
 # Make Chromium Start on Bootup
-# Open this file:
-sudo nano /etc/xdg/lxsession/LXDE-pi/autostart
-
-# Add this line:
-/usr/bin/chromium-browser --disable-restore-session-state --kiosk http://localhost:3000/
+cat "/usr/bin/chromium-browser --disable-restore-session-state --kiosk http://localhost:3000/" >> /etc/xdg/lxsession/LXDE-pi/autostart
 ```
 
 ### With installation complete
