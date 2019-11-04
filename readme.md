@@ -29,9 +29,9 @@ apt install pcscd
 
 # Setup MySQL server
 apt install mariadb-server
-cd ~/nfc-app/members 
-mysql -u root nfc --local-infile=1 < setup.sql
-cd ~/nfc-app
+# No longer needed: Use 
+# TablesPlus to import
+# mysql -u root nfc --local-infile=1 < setup.sql
 
 # Install Node 10
 curl -sL https://deb.nodesource.com/setup_10.x | bash -
@@ -51,6 +51,13 @@ npm install
 # Start server
 pm2 start bin/www --watch
 pm2 save
+
+# Make Chromium Start on Bootup
+# Open this file:
+sudo nano /etc/xdg/lxsession/LXDE-pi/autostart
+
+# Add this line:
+/usr/bin/chromium-browser --disable-restore-session-state --kiosk http://localhost:3000/
 ```
 
 ### With installation complete
