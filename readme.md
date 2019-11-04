@@ -43,6 +43,7 @@ DROP USER 'root'@'localhost';
 CREATE USER 'root'@'%' IDENTIFIED BY '';
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
+exit
 
 # Install Node 10
 curl -sL https://deb.nodesource.com/setup_10.x | bash -
