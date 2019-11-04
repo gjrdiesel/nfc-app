@@ -28,7 +28,7 @@ models.sequelize.sync().then(function () {
     http.listen(port, function () {
         debug('Express http listening on port ' + http.address().port);
     });
-    http.on('error', onError);
+    http.on('error', process.exit);
     http.on('listening', onListening);
 });
 
