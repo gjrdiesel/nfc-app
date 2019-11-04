@@ -50,6 +50,7 @@ npm install
 
 # Start server
 pm2 start bin/www --watch
+pm2 save
 ```
 
 ### With installation complete
