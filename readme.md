@@ -47,9 +47,15 @@ cd nfc-app
 
 # Install dependencies
 npm install
+npm install nfc-pcsc
 
 # Start server
 pm2 start bin/www --watch
+
+# Run PM2 on start up
+sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u pi --hp /home/pi
+
+# Save 
 pm2 save
 
 # Make Chromium Start on Bootup
