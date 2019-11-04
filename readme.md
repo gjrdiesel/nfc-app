@@ -36,7 +36,7 @@ apt install mariadb-server
 
 # Setup mysql user
 # Run these commands in mysql
-sudo mysql
+mysql
 
 # Then run:
 DROP USER 'root'@'localhost';
@@ -44,6 +44,9 @@ CREATE USER 'root'@'%' IDENTIFIED BY '';
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 exit
+
+# Enable mysql on reboot
+systemctl enable mariadb
 
 # Install Node 10
 curl -sL https://deb.nodesource.com/setup_10.x | bash -
