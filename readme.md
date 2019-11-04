@@ -29,9 +29,15 @@ apt install pcscd
 
 # Setup MySQL server
 apt install mariadb-server
+
 # No longer needed: Use 
 # TablesPlus to import
 # mysql -u root nfc --local-infile=1 < setup.sql
+
+# Setup mysql user
+mysql_secure_installation
+
+# No to root password
 
 # Install Node 10
 curl -sL https://deb.nodesource.com/setup_10.x | bash -
