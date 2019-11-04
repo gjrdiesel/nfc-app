@@ -28,7 +28,7 @@ models.sequelize.sync().then(function () {
     http.listen(port, function () {
         debug('Express http listening on port ' + http.address().port);
     });
-    http.on('error', process.exit);
+    http.on('error', onError);
     http.on('listening', onListening);
 });
 
@@ -57,26 +57,7 @@ function normalizePort(val) {
  */
 
 function onError(error) {
-    if (error.syscall !== 'listen') {
-        throw error;
-    }
-
-    const bind = typeof port === 'string'
-        ? 'Pipe ' + port
-        : 'Port ' + port;
-
-    // handle specific listen errors with friendly messages
-    switch (error.code) {
-        case 'EACCES':
-            console.error(bind + ' requires elevated privileges');
-            break;
-        case 'EADDRINUSE':
-            console.error(bind + ' is already in use');
-            break;
-        default:
-            throw error;
-    }
-    
+    console.log("ERROR: ",error);
     process.exit(1);
 }
 
