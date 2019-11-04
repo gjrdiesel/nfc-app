@@ -37,6 +37,9 @@ apt install mariadb-server
 curl -sL https://deb.nodesource.com/setup_10.x | bash -
 apt-get install -y nodejs
 
+# Exit sudo 
+exit
+
 # Install a "node server" (process manager)
 npm install -g pm2
 
