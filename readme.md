@@ -68,7 +68,7 @@ npm install
 npm install nfc-pcsc
 
 # Start server
-pm2 start bin/www --watch
+pm2 start bin/www --restart-delay=3000 --watch
 
 # Run PM2 on start up
 sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u pi --hp /home/pi
