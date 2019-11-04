@@ -28,7 +28,7 @@ apt install libpcsclite-dev
 apt install pcscd
 
 # Setup MySQL server
-apt install mysql
+apt install mariadb-server
 cd ~/nfc-app/members 
 mysql -u root nfc --local-infile=1 < setup.sql
 cd ~/nfc-app
